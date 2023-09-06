@@ -1,14 +1,13 @@
 from numpy import random
 import pandas as pd
-import matplotlib.pyplot as plt
 import os
 import sorting
-import main
+from globalData import MAXARRAYSIZE , LARGESTNUM
 
 scriptPath = os.path.dirname(__file__)
 
 #
-# part ci: S fixed, plot number of key comparisons over diff size of input list n
+# part ci: fix an S, create a CSV file with column 1 as the arraySize (1000 to 10 million), and column 2 as number of comparisons needed
 #
 
 S = int(input("Choose S: ")) # thereshold for size of subarray (switch from insertionSort to mergeSort)
@@ -19,9 +18,9 @@ increment = int (input ("Enter incrementation number: "))
 arraySize = 1000  # aka n (starting array size)
 comparisonsList = {'arraySize': [], 'keyComparisons': []}
 
-while arraySize <= main.MAXARRAYSIZE :
+while arraySize <= MAXARRAYSIZE :
 
-    randomIntegers = random.randint(1, main.LARGESTNUM, arraySize).tolist()
+    randomIntegers = random.randint(1, LARGESTNUM, arraySize).tolist()
     numComparisons = sorting.mergeSortHybrid(randomIntegers, S)
 
     comparisonsList['arraySize'].append(arraySize)

@@ -40,11 +40,22 @@ def mergeSortOriginal (array) :
         if (L[i] < R[j]) :
             array[k] = L[i]
             i += 1
+            k += 1
+
+        elif (L[i] == R[j]) :
+            array[k] = L[i]
+            k += 1
+            array[k] = R[j]
+            k += 1
+
+            i += 1
+            j += 1 
+
         else :
             array[k] = R[j]
             j += 1
+            k += 1
 
-        k += 1
         keyComparisons += 1
 
     while i < len (L):
@@ -74,10 +85,10 @@ def mergeSortHybrid(array , S):
     mid = len(array) // 2
 
     L = array[:mid]
-    keyComparisons += mergeSortHybrid(L , S)
+    keyComparisons += mergeSortHybrid (L , S)
 
     R = array[mid:]
-    keyComparisons += mergeSortHybrid(R , S)
+    keyComparisons += mergeSortHybrid (R , S)
 
     i = j = k = 0
 
@@ -85,11 +96,22 @@ def mergeSortHybrid(array , S):
         if (L[i] < R[j]):
             array[k] = L[i]
             i += 1
+            k += 1
+
+        elif (L[i] == R[j]):
+            array[k] = L[i]
+            k += 1
+            array[k] = R[j]
+            k += 1
+
+            i += 1
+            j += 1
+
         else:
             array[k] = R[j]
             j += 1
+            k += 1
 
-        k += 1
         keyComparisons += 1
 
     while i < len(L):
@@ -103,4 +125,3 @@ def mergeSortHybrid(array , S):
         j += 1
 
     return keyComparisons
-

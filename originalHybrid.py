@@ -1,10 +1,8 @@
 from numpy import random
-import pandas as pd
-import matplotlib.pyplot as plt
 import os
 import time
 import sorting
-import main
+from globalData import MAXARRAYSIZE , LARGESTNUM
 
 scriptPath = os.path.dirname(__file__)
 
@@ -15,7 +13,7 @@ scriptPath = os.path.dirname(__file__)
 S = int(input("Choose S: ")) # thereshold for size of subarray (switch from insertionSort to mergeSort)
 print()
 
-randomIntegers = random.randint(1, main.LARGESTNUM, main.MAXARRAYSIZE).tolist()
+randomIntegers = random.randint(1, LARGESTNUM, MAXARRAYSIZE).tolist()
 randomIntegers2 = randomIntegers.copy()
 
 start = time.time()

@@ -3,13 +3,49 @@ import time
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import re
 
-MAXARRAYSIZE = 10_000_000  # max array size
-LARGESTNUM = 100_000_000  # aka x (largest number in dataset)
+scriptPath = os.path.dirname(__file__)
 
-#todo (ignore all the stuff below)
+def partCi():
+    for fileName in os.listdir(f"{scriptPath}\\result"):
+        if fileName[:14] == "compOverSize_S":
+            print(fileName)
+            df = pd.read_csv(f"{scriptPath}\\result\\{fileName}")
 
-#######################################################################################################
+            x = df['arraySize']
+            y = df['keyComparisons']
+            S = re.findall('\d+', fileName)[0]
+            plt.plot(x , y , label=f"S = {S}")
+
+    plt.legend(loc="upper left" , numpoints=1)
+    plt.xlabel ("Array Size")
+    plt.ylabel ("Number of Key Comparisons")
+    plt.show()
+
+
+print ("1. (part ci) Plot the number of key comparisons over different sizes of the input list n, using the created compOverSize_SX.csv files in result folder")
+print ("2. (coming soon) (part cii) Plot the number of key comaprisons over different values of S, using the created compOverS_arraySizeX.csv files in result folder")
+choice = int(input ("Enter your choice: "))
+
+if choice == 1 :
+    print ("1. Create a graph using all compOverSize_SX.csv files")
+    print ("2. (coming soon) Create a graph using selected compOverSize_SX.csv files")
+    choice = int (input ("Enter your choice: "))
+
+    if (choice == 1) :
+        partCi()
+    else :
+        pass
+else :
+    pass
+
+
+
+
+        
+
+    
 
 #
 # part 3: plot number of key comparisons over diff input size, for both insertion sort and merge sort
