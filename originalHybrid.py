@@ -2,9 +2,10 @@ from numpy import random
 import os
 import time
 import sorting
-from globalData import MAXARRAYSIZE , LARGESTNUM
 
-scriptPath = os.path.dirname(__file__)
+MAXARRAYSIZE = 10_000_000
+LARGESTNUM = 100_000_000
+SCRIPTPATH = os.path.dirname(__file__)
 
 #
 # part d: compare the number of key comparisons and CPU times between original merge sort and hybrid merge sort

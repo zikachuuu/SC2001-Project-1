@@ -2,36 +2,50 @@ from numpy import random
 import pandas as pd
 import os
 import sorting
-from globalData import MAXARRAYSIZE , LARGESTNUM
 
-scriptPath = os.path.dirname(__file__)
+MAXARRAYSIZE = 1_000_000
+LARGESTNUM = 100_000_000
+SCRIPTPATH = os.path.dirname(__file__)
 
 #
-# part ci: fix an S, create a CSV file with column 1 as the arraySize (1000 to 10 million), and column 2 as number of comparisons needed
+# part ci
+#
+# create a CSV file with column 1 as the arraySize (1000 to MAXARRAYSIZE), and remaining columns as number of key comparisons needed for different S (0 to 30) 
+# for each row the randomIntegers array used for sorting is the same (ie a new randomIntegers array is only generated for each array size)
+#
+# todo: plot a line graph for each different value of S on excel
 #
 
-S = int(input("Choose S: ")) # thereshold for size of subarray (switch from insertionSort to mergeSort)
+increment = 500
+arraySize = 1000  # starting array size
+oldArraySize = 1000 
 
-multiplyIncre = bool( int( input ("Array size incremention method (0 for addition , 1 for multiplication): " ) ) )
-increment = int (input ("Enter incrementation number: "))
+comparisonsList = {'arraySize': []}
+for s in range (0 , 31 , 3) :
+    comparisonsList[f"keyComparisons_S{s}"] = []
 
-arraySize = 1000  # aka n (starting array size)
-comparisonsList = {'arraySize': [], 'keyComparisons': []}
-
+# for each row
 while arraySize <= MAXARRAYSIZE :
 
+    comparisonsList['arraySize'].append (arraySize)
     randomIntegers = random.randint(1, LARGESTNUM, arraySize).tolist()
-    numComparisons = sorting.mergeSortHybrid(randomIntegers, S)
 
-    comparisonsList['arraySize'].append(arraySize)
-    comparisonsList['keyComparisons'].append (numComparisons)
+    # for each item in the row
+    for s in range(0, 31, 3):
 
-    if multiplyIncre :
-        arraySize *= increment
-    else :
-        arraySize += increment
+        randomIntegersCopy = randomIntegers.copy()
+
+        numComparisons = sorting.mergeSortHybrid(randomIntegersCopy, s)
+        comparisonsList[f"keyComparisons_S{s}"].append(numComparisons)
+
+    arraySize += increment
+
+    if arraySize == oldArraySize * 10 :
+        oldArraySize = arraySize
+        increment *= 10
+
 
 df = pd.DataFrame (comparisonsList)
-df.to_csv (f"{scriptPath}\\result\\compOverSize_S{S}.csv" , index = False)
+df.to_csv (f"{SCRIPTPATH}\\result\\compOverSize.csv" , index = False)
 
-print (f"Data recorded in result\\compOverSize_S{S}.csv")
+print ("Data recorded in result\\compOverSize.csv")
